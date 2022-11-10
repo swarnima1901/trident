@@ -1154,7 +1154,7 @@ func (c Client) JobGetIterStatus(jobId int) (*azgo.JobGetIterResponse, error) {
 func (c Client) VolumeCreate(
 	ctx context.Context, name, aggregateName, size, spaceReserve, snapshotPolicy, unixPermissions,
 	exportPolicy, securityStyle, tieringPolicy, comment string, qosPolicyGroup QosPolicyGroup, encrypt *bool,
-	snapshotReserve int, dpVolume bool,
+	snapshotReserve int, dpVolume bool, groupId int, userId int,
 ) (*azgo.VolumeCreateResponse, error) {
 	request := azgo.NewVolumeCreateRequest().
 		SetVolume(name).
@@ -1164,7 +1164,9 @@ func (c Client) VolumeCreate(
 		SetSnapshotPolicy(snapshotPolicy).
 		SetExportPolicy(exportPolicy).
 		SetVolumeSecurityStyle(securityStyle).
-		SetVolumeComment(comment)
+		SetVolumeComment(comment).
+		SetGroupId(groupId).
+		SetUserId(userId)
 
 	// For encrypt == nil - we don't explicitely set the encrypt argument.
 	// If destination aggregate is NAE enabled, new volume will be aggregate encrypted
